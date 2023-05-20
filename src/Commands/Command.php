@@ -9,8 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class Command extends SymfonyCommand
 {
-    private $output;
-
     protected $dir;
     protected $composerDir;
     protected $hooks;
@@ -18,10 +16,7 @@ abstract class Command extends SymfonyCommand
     protected $lockDir;
     protected $global;
     protected $lockFile;
-
-    abstract protected function init(InputInterface $input);
-
-    abstract protected function command();
+    private $output;
 
     final protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -56,6 +51,10 @@ abstract class Command extends SymfonyCommand
     protected function global_dir_fallback()
     {
     }
+
+    abstract protected function init(InputInterface $input);
+
+    abstract protected function command();
 
     protected function info($info)
     {

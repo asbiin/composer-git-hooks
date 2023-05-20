@@ -22,7 +22,7 @@ class Hook
     {
         if (is_array($contents)) {
             $commandsSequence = self::stopHookOnFailure($dir, $hook);
-            $separator = $commandsSequence ? ' && \\'.PHP_EOL : PHP_EOL;
+            $separator = $commandsSequence ? ' && \\' . PHP_EOL : PHP_EOL;
             $contents = implode($separator, $contents);
         }
 
@@ -32,20 +32,20 @@ class Hook
     /**
      * Get config section of the composer config file.
      *
-     * @param  string $dir dir where to look for composer.json
-     * @param  string $section config section to fetch in the composer.json
+     * @param string $dir dir where to look for composer.json
+     * @param string $section config section to fetch in the composer.json
      *
      * @return array
      */
     public static function getConfig($dir, $section)
     {
-        if (! in_array($section, self::CONFIG_SECTIONS)) {
-            throw new Exception("Invalid config section [{$section}]. Available sections: ".implode(', ', self::CONFIG_SECTIONS).'.');
+        if (!in_array($section, self::CONFIG_SECTIONS)) {
+            throw new Exception("Invalid config section [{$section}]. Available sections: " . implode(', ', self::CONFIG_SECTIONS) . '.');
         }
 
         $json = self::getComposerJson($dir);
 
-        if (! isset($json['extra']['hooks']['config'][$section])) {
+        if (!isset($json['extra']['hooks']['config'][$section])) {
             return [];
         }
 
@@ -67,7 +67,7 @@ class Hook
     /**
      * Get scripts section of the composer config file.
      *
-     * @param  string $dir Directory where to look for composer.json
+     * @param string $dir Directory where to look for composer.json
      *
      * @return array
      */
@@ -94,24 +94,24 @@ class Hook
     private static function getDefaultHooks()
     {
         return array_flip([
-           'applypatch-msg',
-           'commit-msg',
-           'post-applypatch',
-           'post-checkout',
-           'post-commit',
-           'post-merge',
-           'post-receive',
-           'post-rewrite',
-           'post-update',
-           'pre-applypatch',
-           'pre-auto-gc',
-           'pre-commit',
-           'pre-push',
-           'pre-rebase',
-           'pre-receive',
-           'prepare-commit-msg',
-           'push-to-checkout',
-           'update',
+            'applypatch-msg',
+            'commit-msg',
+            'post-applypatch',
+            'post-checkout',
+            'post-commit',
+            'post-merge',
+            'post-receive',
+            'post-rewrite',
+            'post-update',
+            'pre-applypatch',
+            'pre-auto-gc',
+            'pre-commit',
+            'pre-push',
+            'pre-rebase',
+            'pre-receive',
+            'prepare-commit-msg',
+            'push-to-checkout',
+            'update',
         ]);
     }
 
@@ -135,11 +135,11 @@ class Hook
     {
         $customHooks = self::getConfig($dir, 'custom-hooks');
 
-        if (! $customHooks) {
+        if (!$customHooks) {
             return [];
         }
 
-        if (! is_array($customHooks)) {
+        if (!is_array($customHooks)) {
             throw new Exception('Custom hooks must be an array.');
         }
 
@@ -161,12 +161,12 @@ class Hook
     {
         $composerFile = "{$dir}/composer.json";
 
-        if (! file_exists($composerFile)) {
+        if (!file_exists($composerFile)) {
             return [];
         }
 
         $contents = file_get_contents($composerFile);
 
-        return (array) json_decode($contents, true);
+        return (array)json_decode($contents, true);
     }
 }

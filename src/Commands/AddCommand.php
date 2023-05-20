@@ -8,13 +8,12 @@ use Symfony\Component\Console\Input\InputOption;
 
 class AddCommand extends Command
 {
-    private $addedHooks = [];
-    private $upToDateHooks = [];
-
     protected $force;
     protected $noLock;
     protected $windows;
     protected $ignoreLock;
+    private $addedHooks = [];
+    private $upToDateHooks = [];
 
     protected function configure()
     {
@@ -65,19 +64,6 @@ class AddCommand extends Command
         $this->setGlobalGitHooksPath();
     }
 
-    protected function global_dir_fallback()
-    {
-        if (!empty($this->dir = trim(getenv('COMPOSER_HOME')))) {
-            $this->dir = realpath($this->dir);
-            $this->debug("No global git hook path was provided. Falling back to COMPOSER_HOME [{$this->dir}]");
-        }
-    }
-
-    private static function startsWithShebang($contents)
-    {
-        return substr_compare(trim($contents), "#!", 0) == 0;
-    }
-
     private function addHook($hook, $contents)
     {
         $filename = "{$this->dir}/hooks/{$hook}";
@@ -117,6 +103,11 @@ class AddCommand extends Command
         $this->info("{$operation} [{$hook}] hook");
 
         $this->addedHooks[] = $hook;
+    }
+
+    private static function startsWithShebang($contents)
+    {
+        return substr_compare(trim($contents), "#!", 0) == 0;
     }
 
     private function addLockFile()
@@ -180,5 +171,13 @@ class AddCommand extends Command
         }
 
         $this->info("Global git hook path set to [{$globalHookDir}]");
+    }
+
+    protected function global_dir_fallback()
+    {
+        if (!empty($this->dir = trim(getenv('COMPOSER_HOME')))) {
+            $this->dir = realpath($this->dir);
+            $this->debug("No global git hook path was provided. Falling back to COMPOSER_HOME [{$this->dir}]");
+        }
     }
 }
