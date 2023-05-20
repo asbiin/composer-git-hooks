@@ -1,5 +1,5 @@
 {
-    "name": "brainmaestro/composer-git-hooks",
+    "name": "xheaven/composer-git-hooks",
     "description": "Easily manage git hooks in your composer config",
     "type": "library",
     "minimum-stability": "stable",
@@ -13,6 +13,10 @@
         {
             "name": "Ezinwa Okpoechi",
             "email": "brainmaestro@outlook.com"
+        },
+        {
+            "name": "Mark Magyar",
+            "email": "hello@mmark.me"
         }
     ],
     "require": {

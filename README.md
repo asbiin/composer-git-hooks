@@ -37,7 +37,7 @@ Add a `hooks` section to the `extra` section of your `composer.json` and add the
 Then install with
 
 ```sh
-composer require --dev brainmaestro/composer-git-hooks
+composer require --dev xheaven/composer-git-hooks
 ```
 
 This installs the `cghooks` binary to your `vendor/bin` folder. If this folder is not in your path, you will need to
@@ -51,7 +51,7 @@ You can also install it globally. This feels much more natural when `cghooks` is
 managing global git hooks.
 
 ```sh
-composer global require --dev brainmaestro/composer-git-hooks
+composer global require --dev xheaven/composer-git-hooks
 ```
 
 All commands have global support (besides testing the hooks. Still requires being in the directory with
@@ -225,9 +225,9 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 [badge-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 
-[badge-packagist]: https://img.shields.io/packagist/v/brainmaestro/composer-git-hooks.svg?style=flat-square
+[badge-packagist]: https://img.shields.io/packagist/v/xheaven/composer-git-hooks.svg?style=flat-square
 
-[badge-downloads]: https://img.shields.io/packagist/dt/brainmaestro/composer-git-hooks.svg?style=flat-square
+[badge-downloads]: https://img.shields.io/packagist/dt/xheaven/composer-git-hooks.svg?style=flat-square
 
 [link-author]: https://github.com/BrainMaestro
 
