@@ -34,10 +34,8 @@ abstract class Command extends SymfonyCommand
                 ? dirname(global_hook_dir())
                 : $this->gitDir
         );
-        if ($this->global) {
-            if (empty($this->dir)) {
-                $this->global_dir_fallback();
-            }
+        if ($this->global && empty($this->dir)) {
+            $this->global_dir_fallback();
         }
         if ($this->gitDir === false) {
             $output->writeln('Git is not initialized. Skip setting hooks...');
