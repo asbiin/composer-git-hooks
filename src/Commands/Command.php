@@ -41,7 +41,7 @@ abstract class Command extends SymfonyCommand
             $output->writeln('Git is not initialized. Skip setting hooks...');
             return 0;
         }
-        $this->lockFile = (null !== $this->lockDir ? ($this->lockDir . '/') : '') . Hook::LOCK_FILE;
+        $this->lockFile = ($this->lockDir !== null ? ($this->lockDir . '/') : '') . Hook::LOCK_FILE;
 
         $dir = $this->global ? $this->dir : getcwd();
 
