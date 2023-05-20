@@ -83,7 +83,7 @@ class Hook
     /**
      * Check if a hook is valid
      */
-    private static function isDefaultHook( $hook )
+    private static function isDefaultHook($hook)
     {
         return array_key_exists($hook, self::getDefaultHooks());
     }
