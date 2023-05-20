@@ -77,9 +77,7 @@ class Hook
 
         $possibleHooks = isset($json['extra']['hooks']) ? $json['extra']['hooks'] : [];
 
-        return array_filter($possibleHooks, function ($hook) use ($dir) {
-            return self::isDefaultHook($hook) || self::isCustomHook($dir, $hook);
-        }, ARRAY_FILTER_USE_KEY);
+        return array_filter($possibleHooks, static fn ($hook) => self::isDefaultHook($hook) || self::isCustomHook($dir, $hook), ARRAY_FILTER_USE_KEY);
     }
 
     /**
