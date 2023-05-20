@@ -26,7 +26,7 @@ if (!function_exists('is_windows')) {
      */
     function is_windows()
     {
-        return stripos(PHP_OS, 'WIN') === 0;
+        return stripos(PHP_OS_FAMILY, 'WIN') === 0;
     }
 }
 
