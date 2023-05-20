@@ -28,8 +28,7 @@ class AddCommand extends Command
             ->addOption('git-dir', 'g', InputOption::VALUE_REQUIRED, 'Path to git directory')
             ->addOption('lock-dir', null, InputOption::VALUE_REQUIRED, 'Path to lock file directory', getcwd())
             ->addOption('force-win', null, InputOption::VALUE_NONE, 'Force windows bash compatibility')
-            ->addOption('global', null, InputOption::VALUE_NONE, 'Add global git hooks')
-        ;
+            ->addOption('global', null, InputOption::VALUE_NONE, 'Add global git hooks');
     }
 
     protected function init(InputInterface $input)
@@ -53,10 +52,10 @@ class AddCommand extends Command
             $this->addHook($hook, $contents);
         }
 
-        if (! empty($this->hooks) && count($this->upToDateHooks) === count($this->hooks)) {
+        if (!empty($this->hooks) && count($this->upToDateHooks) === count($this->hooks)) {
             $this->info('All hooks are up to date');
             return;
-        } elseif (! count($this->addedHooks)) {
+        } elseif (!count($this->addedHooks)) {
             $this->error('No hooks were added. Try updating');
             return;
         }
@@ -89,7 +88,7 @@ class AddCommand extends Command
         $shebang = ($this->windows ? '#!/bin/bash' : '#!/bin/sh') . PHP_EOL . PHP_EOL;
         $composerDir = $this->global ? $this->dir : getcwd();
         $contents = Hook::getHookContents($composerDir, $contents, $hook);
-        if (AddCommand::startsWithShebang($contents)) {
+        if (self::startsWithShebang($contents)) {
             // Hook already starts with a shebang, do not add the default.
             // Many developers use bash in hooks, but sh is guaranteed to
             // be bash compatible. Especially in docker images with minimal
@@ -98,7 +97,7 @@ class AddCommand extends Command
         }
         $hookContents = $shebang . $contents . PHP_EOL;
 
-        if (! $this->force && $exists) {
+        if (!$this->force && $exists) {
             $actualContents = file_get_contents($filename);
 
             if ($actualContents === $hookContents) {
@@ -137,7 +136,7 @@ class AddCommand extends Command
             return;
         }
 
-        if (! $this->ignoreLock) {
+        if (!$this->ignoreLock) {
             $this->debug('Skipped adding [' . Hook::LOCK_FILE . '] to .gitignore');
             return;
         }
@@ -153,7 +152,7 @@ class AddCommand extends Command
 
     private function setGlobalGitHooksPath()
     {
-        if (! $this->global) {
+        if (!$this->global) {
             return;
         }
 
@@ -176,7 +175,7 @@ class AddCommand extends Command
 
         if ($exitCode !== 0) {
             $this->error("Could not set global git hook path.\n" .
-            " Try running this manually 'git config --global core.hooksPath {$globalHookDir}'");
+                " Try running this manually 'git config --global core.hooksPath {$globalHookDir}'");
             return;
         }
 
