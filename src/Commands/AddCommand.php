@@ -54,7 +54,9 @@ class AddCommand extends Command
         if (!empty($this->hooks) && count($this->upToDateHooks) === count($this->hooks)) {
             $this->info('All hooks are up to date');
             return;
-        } elseif (!count($this->addedHooks)) {
+        }
+
+        if (!count($this->addedHooks)) {
             $this->error('No hooks were added. Try updating');
             return;
         }
