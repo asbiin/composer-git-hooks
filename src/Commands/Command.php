@@ -9,8 +9,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class Command extends SymfonyCommand
 {
-    private $output;
-
     protected $dir;
     protected $composerDir;
     protected $hooks;
@@ -18,10 +16,7 @@ abstract class Command extends SymfonyCommand
     protected $lockDir;
     protected $global;
     protected $lockFile;
-
-    abstract protected function init(InputInterface $input);
-
-    abstract protected function command();
+    private $output;
 
     final protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -34,16 +29,14 @@ abstract class Command extends SymfonyCommand
                 ? dirname(global_hook_dir())
                 : $this->gitDir
         );
-        if ($this->global) {
-            if (empty($this->dir)) {
-                $this->global_dir_fallback();
-            }
+        if ($this->global && empty($this->dir)) {
+            $this->global_dir_fallback();
         }
         if ($this->gitDir === false) {
             $output->writeln('Git is not initialized. Skip setting hooks...');
             return 0;
         }
-        $this->lockFile = (null !== $this->lockDir ? ($this->lockDir . '/') : '') . Hook::LOCK_FILE;
+        $this->lockFile = ($this->lockDir !== null ? ($this->lockDir . '/') : '') . Hook::LOCK_FILE;
 
         $dir = $this->global ? $this->dir : getcwd();
 
@@ -59,18 +52,20 @@ abstract class Command extends SymfonyCommand
     {
     }
 
+    abstract protected function init(InputInterface $input);
+
+    abstract protected function command();
+
     protected function info($info)
     {
-        $info = str_replace('[', '<info>', $info);
-        $info = str_replace(']', '</info>', $info);
+        $info = str_replace(array('[', ']'), array('<info>', '</info>'), $info);
 
         $this->output->writeln($info);
     }
 
     protected function debug($debug)
     {
-        $debug = str_replace('[', '<comment>', $debug);
-        $debug = str_replace(']', '</comment>', $debug);
+        $debug = str_replace(array('[', ']'), array('<comment>', '</comment>'), $debug);
 
         $this->output->writeln($debug, OutputInterface::VERBOSITY_VERBOSE);
     }

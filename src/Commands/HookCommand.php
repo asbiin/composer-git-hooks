@@ -15,7 +15,7 @@ class HookCommand extends SymfonyCommand
 
     public function __construct($hook, $contents, $composerDir)
     {
-        $this->hook     = $hook;
+        $this->hook = $hook;
         $this->contents = $contents;
         $this->composerDir = $composerDir;
         parent::__construct();
@@ -26,15 +26,14 @@ class HookCommand extends SymfonyCommand
         $this
             ->setName($this->hook)
             ->setDescription("Test your {$this->hook} hook")
-            ->setHelp("This command allows you to test your {$this->hook} hook")
-        ;
+            ->setHelp("This command allows you to test your {$this->hook} hook");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $contents = Hook::getHookContents($this->composerDir, $this->contents, $this->hook);
         $outputMessage = [];
-        $returnCode    = 0;
+        $returnCode = 0;
         exec($contents, $outputMessage, $returnCode);
 
         $output->writeln(implode(PHP_EOL, $outputMessage));

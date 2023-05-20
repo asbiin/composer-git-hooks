@@ -2,8 +2,8 @@
 
 namespace BrainMaestro\GitHooks\Commands;
 
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
 class RemoveCommand extends Command
@@ -31,8 +31,7 @@ class RemoveCommand extends Command
             )
             ->addOption('git-dir', 'g', InputOption::VALUE_REQUIRED, 'Path to git directory')
             ->addOption('lock-dir', null, InputOption::VALUE_REQUIRED, 'Path to lock file directory', getcwd())
-            ->addOption('global', null, InputOption::VALUE_NONE, 'Remove global git hooks')
-        ;
+            ->addOption('global', null, InputOption::VALUE_NONE, 'Remove global git hooks');
     }
 
     protected function init(InputInterface $input)
@@ -50,7 +49,7 @@ class RemoveCommand extends Command
         foreach ($this->hooksToRemove as $hook) {
             $filename = "{$this->dir}/hooks/{$hook}";
 
-            if (! array_key_exists($hook, $this->lockFileHooks) && ! $this->force) {
+            if (!array_key_exists($hook, $this->lockFileHooks) && !$this->force) {
                 $this->info("Skipped [{$hook}] hook - not present in lock file");
                 $this->lockFileHooks = file_exists($this->lockFile)
                     ? array_flip(json_decode(file_get_contents($this->lockFile)))
