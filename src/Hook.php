@@ -36,6 +36,7 @@ class Hook
      * @param string $section config section to fetch in the composer.json
      *
      * @return array
+     * @throws Exception
      */
     public static function getConfig($dir, $section)
     {
@@ -54,6 +55,7 @@ class Hook
      * @param string $dir
      * @param string $hook
      * @return bool
+     * @throws Exception
      */
     public static function stopHookOnFailure($dir, $hook)
     {
@@ -116,6 +118,7 @@ class Hook
      * @param string $dir
      * @param string $hook
      * @return bool
+     * @throws Exception
      */
     private static function isCustomHook($dir, $hook)
     {
@@ -126,6 +129,7 @@ class Hook
      * Get custom hooks from config `custom-hooks` section.
      * @param string $dir
      * @return array
+     * @throws Exception
      */
     public static function getCustomHooks($dir)
     {
