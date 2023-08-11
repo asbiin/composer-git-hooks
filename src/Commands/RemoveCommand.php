@@ -52,7 +52,7 @@ class RemoveCommand extends Command
 
         if ($removeAllHooks) {
             $hooksDir = "{$this->dir}/hooks/";
-            $hooks = array_filter(scandir($hooksDir), fn($filename) => ($filename !== "." && $filename !== "..") && is_file($hooksDir . $filename));
+            $hooks = array_filter(scandir($hooksDir), fn ($filename) => ($filename !== "." && $filename !== "..") && is_file($hooksDir . $filename));
 
             $this->hooksToRemove = $hooks;
         } else {
