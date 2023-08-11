@@ -2,6 +2,7 @@
 
 namespace BrainMaestro\GitHooks\Commands;
 
+use BrainMaestro\GitHooks\Hook;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -29,6 +30,12 @@ class RemoveCommand extends Command
                 InputOption::VALUE_NONE,
                 'Delete hooks without checking the lock file'
             )
+            ->addOption(
+                'all',
+                'a',
+                InputOption::VALUE_NONE,
+                'Delete all hooks'
+            )
             ->addOption('git-dir', 'g', InputOption::VALUE_REQUIRED, 'Path to git directory')
             ->addOption('lock-dir', null, InputOption::VALUE_REQUIRED, 'Path to lock file directory', getcwd())
             ->addOption('global', null, InputOption::VALUE_NONE, 'Remove global git hooks');
@@ -41,7 +48,16 @@ class RemoveCommand extends Command
             ? array_flip(json_decode(file_get_contents($this->lockFile)))
             : [];
         $hooks = $input->getArgument('hooks');
-        $this->hooksToRemove = empty($hooks) ? array_keys($this->hooks) : $hooks;
+        $removeAllHooks = $input->getOption('all');
+
+        if ($removeAllHooks) {
+            $hooksDir = "{$this->dir}/hooks/";
+            $hooks = array_filter(scandir($hooksDir), fn($filename) => ($filename !== "." && $filename !== "..") && is_file($hooksDir . $filename));
+
+            $this->hooksToRemove = $hooks;
+        } else {
+            $this->hooksToRemove = empty($hooks) ? array_keys($this->hooks) : $hooks;
+        }
     }
 
     protected function command()
@@ -61,6 +77,12 @@ class RemoveCommand extends Command
                 unlink($filename);
                 $this->info("Removed [{$hook}] hook");
                 unset($this->lockFileHooks[$hook]);
+                continue;
+            }
+
+            if (is_file($filename)) {
+                unlink($filename);
+                $this->info("Removed [{$hook}] hook");
                 continue;
             }
 
