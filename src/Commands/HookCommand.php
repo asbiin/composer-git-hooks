@@ -29,7 +29,7 @@ class HookCommand extends SymfonyCommand
             ->setHelp("This command allows you to test your {$this->hook} hook");
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $contents = Hook::getHookContents($this->composerDir, $this->contents, $this->hook);
         $outputMessage = [];

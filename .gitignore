@@ -1,6 +1,7 @@
 /vendor/
 /.idea/
 /test-git-dir/
+composer.lock
 cghooks-temp-*
 .php_cs.cache
 phpunit.xml
